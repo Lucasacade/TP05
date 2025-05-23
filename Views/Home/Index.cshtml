@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Courier New', monospace;
+        overflow: hidden;
+        background-color: #000;
+    }
+
+    .hero {
+        position: relative;
+        height: 100vh;
+        background: url(/img/barrasacero.avif);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.7);
+        z-index: 1;
+    }
+
+    .content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: #fff;
+        animation: fadeIn 2s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    #typed-title {
+        font-size: 3.5em;
+        color: #fff;
+        border-right: 4px solid #fff;
+        white-space: nowrap;
+        overflow: hidden;
+        /* width lo dejamos sin animación para que no desaparezca */
+        animation: blink 0.8s step-end infinite;
+        margin-bottom: 0.2em;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    @@keyframes blink {
+        50% { border-color: transparent; }
+    }
+
+    #subtitle {
+        font-size: 1.5em;
+        margin-bottom: 1.5em;
+        text-shadow: 1px 1px 5px black;
+    }
+
+    .start-button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        background: linear-gradient(45deg, #007bff, #00bfff);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: 0.3s ease;
+        box-shadow: 0 0 10px #00bfff;
+        display: inline-block;
+    }
+
+    .start-button:hover {
+        background: linear-gradient(45deg, #0056b3, #0080ff);
+        box-shadow: 0 0 20px #00bfff;
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="hero">
+    <div class="overlay"></div>
+    <div class="content">
+        <h1 id="typed-title"></h1>
+        <p id="subtitle">¿Lograrás lo que pocos consiguieron?</p>
+        <a href="/Home/Historia" class="start-button">Comenzar escape</a>
+    </div>
+    <audio autoplay loop>
+        <source src="/audio/ambiente.mp3" type="audio/mpeg" />
+        Tu navegador no soporta audio HTML5.
+    </audio>
+</div>
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+            const text = "Escape de Alcatraz";
+            const target = document.getElementById("typed-title");
+            let index = 0;
+
+            function typeWriter() {
+                if (index < text.length) {
+                    target.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(typeWriter, 120);
+                }
+            }
+
+            typeWriter();
+        };
+    </script>
+}
